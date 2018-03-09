@@ -2,47 +2,54 @@ $(document).ready(function () {
 
   // SETUP VARIABLES
   var animalArray = ["dog", "cat", "rabbit", "hamster", "skunk", "goldfish", "bird", "ferret", "turtle", "sugar glider",
-  "chincilla", "hedgehog", "hermit crab", "gerbil", "pymgy goat", "chicken", "capybara", "teacup pig", "serval", "salamandar", "frog"];
-  
+    "chincilla", "hedgehog", "hermit crab", "gerbil", "pymgy goat", "chicken", "capybara", "teacup pig", "serval", "salamandar", "frog"];
+
   var main = $("body");
   var btns = main.find("#buttons");
-    
+
   // FUNCTIONS
 
   function displayGifs() {
 
     var gifs = $(this).attr("data-name");
-    
+
   }
 
   for (var i = 0; i < animalArray.length; i++) {
     var animalButtons = $("<button>");
     animalButtons.addClass("btn btn-warning");
-    $("#btns").attr("data-text", animalArray[i]);
+    animalButtons.attr("data-text", animalArray[i]);
+    animalButtons.text(animalArray[i]);
     $("#btns").append(animalButtons);
-    $("#btns").append(animalArray[i]);
     console.log(animalArray[i]);
   };
 
 
   // MAIN PROCESSES
-  $("#unique animal buttons of course").on("click", function(event) {
+  $(document).on("click", ".btn", function () {
+    var animal = $(this).attr("data-animal");
 
-    event.preventDefault();
+    var queryURL = "https://api.giphy.com/v1/gifs/trending?limit=10&limit=10&q=" + animal + "&api_key=EAfLzbygjCiirXMpOsUpd3ghVfNREa3G";
 
-    var userInput = $("#addNewButtons").val().trim();
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function (response) {
+      var results = response.data;
 
-    var searchGiphy = function(gif) { 
-      var queryURL = "https://api.giphy.com/v1/gifs/trending?limit=10&q=" + userInput + "&api_key=EAfLzbygjCiirXMpOsUpd3ghVfNREa3G";  
-    
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      }).then(function(response) {
-        console.log(response);
-        ("#buttons").append(JSON.stringify(response));
-      });
-    };
+      for (var i = 0; i < results.length; i++) {
+        if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+          var stillDiv = $("<div class='item'>");
+          var rating = results[i].rating;
+          var p = $("<p>").text("Rating: " + rating);
+          var animalImage = $("<img>");
+          animalImage.attr("src", results[i].images.fixed_height_still.url);
+          stillDiv.append(p);
+          stillDiv.append(animalImage);
+          $("#show-gifs").prepend(stillDiv);
+        };
+      };
+    });
 
   });
 

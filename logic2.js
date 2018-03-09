@@ -1,23 +1,3 @@
-$(document).ready(function () {
-
-    // GLOBAL VARIABLES
-
-    var animalArray = ["dog", "cat", "rabbit", "hamster", "skunk", "goldfish", "bird", "ferret", "turtle", "sugar glider",
-    "chincilla", "hedgehog", "hermit crab", "gerbil", "pymgy goat", "chicken", "capybara", "teacup pig", "serval", "salamandar", "frog"];
-
-
-    // FUNCTIONS
-
-    function createButtons() {
-        for (var i = 0; i < animalArray.length; i++) {
-            var animalButtons = $("<button>");
-            animalButtons.addClass("btn btn-warning");
-            $("#btns").attr("data-text", animalArray[i]);
-            $("#btns").append(animalButtons);
-            $("#btns").append(animalArray[i]);
-            console.log(animalArray[i]);
-        };
-    };
 
     $("btns").on("click", function() {
         var animal = $(this).attr("data-animal");
@@ -45,7 +25,7 @@ $(document).ready(function () {
         });
 
     });
-});
+
    
 
 
