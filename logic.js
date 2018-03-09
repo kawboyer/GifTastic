@@ -9,37 +9,47 @@ $(document).ready(function () {
     
   // FUNCTIONS
 
+  function displayGifs() {
+
+    var gifs = $(this).attr("data-name");
+    
+  }
+
   for (var i = 0; i < animalArray.length; i++) {
     var animalButtons = $("<button>");
-    animalButtons.addClass("btn btn-warning")
-    $("#buttons").attr("data-text", animalArray[i]);
-    $("#buttons").append(animalButtons);
-    $("#buttons").append(animalArray[i]);
+    animalButtons.addClass("btn btn-warning");
+    $("#btns").attr("data-text", animalArray[i]);
+    $("#btns").append(animalButtons);
+    $("#btns").append(animalArray[i]);
     console.log(animalArray[i]);
   };
 
 
-  
+  // MAIN PROCESSES
+  $("#unique animal buttons of course").on("click", function(event) {
+
+    event.preventDefault();
+
+    var userInput = $("#addNewButtons").val().trim();
+
+    var searchGiphy = function(gif) { 
+      var queryURL = "https://api.giphy.com/v1/gifs/trending?limit=10&q=" + userInput + "&api_key=EAfLzbygjCiirXMpOsUpd3ghVfNREa3G";  
+    
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function(response) {
+        console.log(response);
+        ("#buttons").append(JSON.stringify(response));
+      });
+    };
+
+  });
+
 });
 
-// MAIN PROCESSES
 
-
-var userInput = "";
-
-var searchGiphy = function(gif) { 
-  var queryURL = "https://api.giphy.com/v1/gifs/trending?" + userInput + "api_key=EAfLzbygjCiirXMpOsUpd3ghVfNREa3G";  
-
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  }).then(function(response) {
-    console.log(response);
-    ("#buttons").append(JSON.stringify(response));
-  });
-};
-
-searchGiphy("dog");
+//searchGiphy("dog");
 
 /*
  ------- 1. Create array of strings (each one related to a topic)
