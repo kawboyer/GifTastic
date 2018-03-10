@@ -1,5 +1,5 @@
 
-    $("btns").on("click", function() {
+    
         var animal = $(this).attr("data-animal");
 
         var queryURL = "https://api.giphy.com/v1/gifs/trending?limit=10&limit=10&q=" + animal + "&api_key=EAfLzbygjCiirXMpOsUpd3ghVfNREa3G";
